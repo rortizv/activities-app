@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+}
+
+app-sidebar {
+  background-color: #3154AD;
+  height: 100vh;
+}
+
+h1 {
+  font-size: 30px;
+  font-weight: 600;
+  text-shadow: 1px 1px 4px #7a7a7a;
+  letter-spacing: 3px;
+  margin: 2rem 0 0 3rem;
+}
+
+.new-act-btn {
+  margin-top: 1.5rem;
+}
+
+.main-container {
+  margin-right: 2rem;
+  width: 100%;
+
+  button {
+    height: 45px;
+    width: 210px;
+    font-size: 18px;
+  }
+}
