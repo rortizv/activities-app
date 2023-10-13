@@ -1,8 +1,8 @@
 export interface Activity {
-  activityId: number;
+  activityId: string;
   title: string;
   type: string;
-  startDate: Date | string | null;
-  endDate: Date | string | null;
-  status: string | null;
+  startDate?: Date | string | null;
+  endDate?: Date | string | null;
+  status?: string | null;
 }

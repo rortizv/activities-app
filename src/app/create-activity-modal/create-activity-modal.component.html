@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+  <h2 mat-dialog-title>Agregar nueva actividad</h2>
+</mat-toolbar>
+
+<mat-dialog-content>
+  <form [formGroup]="activityForm" class="activity-form">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre de la actividad</mat-label>
+        <input matInput formControlName="title" placeholder="Digite un nombre para la nueva actividad" required>
+        <button *ngIf="activityForm.get('title')?.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="clearTitle()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de actividad</mat-label>
+        <mat-select formControlName="type" required>
+          <mat-option *ngFor="let type of activityTypes" [value]="type">{{ type }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row-dates">
+      <div>
+        <label for="startDate">Fecha inicio</label>
+        <input class="date-input" type="datetime-local" id="startDate" name="startDate" formControlName="startDate" required>
+      </div>
+      <div>
+        <label for="endDate">Fecha finalización</label>
+        <input class="date-input" type="datetime-local" id="endDate" name="endDate" formControlName="endDate" required>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="gap-10">
+  <button mat-raised-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button [mat-dialog-close]="true" color="primary" (click)="addActivity()" cdkFocusInitial
+    [disabled]="activityForm.invalid">
+    Agregar
+  </button>
+</mat-dialog-actions>

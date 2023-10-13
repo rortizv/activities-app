@@ -1,0 +1,30 @@
+h2 {
+  color: #FFFFFF !important;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.row-dates {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+mat-form-field {
+  width: 100% !important;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+
+.date-input {
+  padding: 15px;
+  border: 1px solid #ADADAD;
+  border-radius: 3px;
+}
