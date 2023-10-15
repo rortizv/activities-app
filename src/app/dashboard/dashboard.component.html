@@ -49,7 +49,8 @@
           {{today | date}}
           <span class="task-count"><b>({{countActivitiesForToday()}})</b></span>
         </div>
-        <div class="card" *ngFor="let activity of todayList" [draggable]="true" (dragstart)="drag($event, activity)" id="{{activity.activityId}}">
+        <app-activity-card *ngFor="let activity of todayList" [activity]="activity"></app-activity-card>
+        <!-- <div class="card" *ngFor="let activity of todayList" [draggable]="true" (dragstart)="drag($event, activity)" id="{{activity.activityId}}">
           <div class="card-options">
             <mat-menu #activityMenu="matMenu">
               <button mat-menu-item (click)="editActivity(activity)">
@@ -70,7 +71,7 @@
             <mat-icon class="icon" *ngIf="activity.type === 'LEARN'">school</mat-icon>
             <p>{{activity.title}}</p>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- Columna "Mañana" -->

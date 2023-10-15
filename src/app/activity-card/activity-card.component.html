@@ -1,0 +1,22 @@
+<div class="card" *ngFor="let activity of todayList" [draggable]="true" (dragstart)="drag($event, activity)" id="{{activity.activityId}}">
+  <div class="card-options">
+    <mat-menu #activityMenu="matMenu">
+      <button mat-menu-item (click)="editActivity(activity)">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+      <button mat-menu-item (click)="deleteActivity(activity)">
+        <mat-icon>delete</mat-icon> Eliminar
+      </button>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="activityMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
+  <div class="displayFlex">
+    <mat-icon class="icon" *ngIf="activity.type === 'FOOD'">restaurant_menu</mat-icon>
+    <mat-icon class="icon" *ngIf="activity.type === 'PARTY'">celebration</mat-icon>
+    <mat-icon class="icon" *ngIf="activity.type === 'ACTIVITY'">task_alt</mat-icon>
+    <mat-icon class="icon" *ngIf="activity.type === 'LEARN'">school</mat-icon>
+    <p>{{activity.title}}</p>
+  </div>
+</div>

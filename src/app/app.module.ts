@@ -14,13 +14,15 @@ import { SharedModule } from './shared/shared.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CreateActivityModalComponent } from './create-activity-modal/create-activity-modal.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ActivityCardComponent } from './activity-card/activity-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     CreateActivityModalComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ActivityCardComponent
   ],
   imports: [
     BrowserModule,
