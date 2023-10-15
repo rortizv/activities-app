@@ -1,5 +1,18 @@
 # ActivitiesApp
 
+Developed with Angular and Angular Material as UI tool.
+
+Steps to run in local:
+1. Clone project `git clone https://github.com/rortizv/activities-app.git`
+2. Install dependencies `npm install`
+3. Run & open in browser `ng serve -o`
+
+You can see the project running in a public url here: https://activities-app-mu.vercel.app/
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.5.
 
 ## Development server
