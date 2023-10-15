@@ -11,17 +11,21 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { MaterialModule } from './material/material.module';
 import { SharedModule } from './shared/shared.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CreateActivityModalComponent } from './create-activity-modal/create-activity-modal.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    CreateActivityModalComponent
+    CreateActivityModalComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    DragDropModule,
     BrowserAnimationsModule,
     DashboardModule,
     MaterialModule,

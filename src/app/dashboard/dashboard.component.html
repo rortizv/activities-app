@@ -1,10 +1,138 @@
-<div class="container">
+<div class="displayFlex">
+
   <app-sidebar></app-sidebar>
-  <div class="displayFlex main-container space-between">
-    <h1>Itinerario</h1>
-    <button mat-raised-button color="primary" class="new-act-btn" (click)="openCreateActivityDialog()">
-      <mat-icon>add</mat-icon>
-      Nueva actividad
-    </button>
+
+  <div class="main-container">
+
+    <div class="displayFlex space-between">
+      <h1>Itinerario</h1>
+      <button mat-raised-button color="primary" class="new-act-btn" (click)="openCreateActivityDialog()">
+        <mat-icon>add</mat-icon>
+        Nueva actividad
+      </button>
+    </div>
+
+    <div class="displayFlex space-between secondary-container">
+      <!-- Columna "Sin fecha asignada" -->
+      <div class="column" id="todo" (drop)="onDrop($event, 'todo')" (dragover)="allowDrop($event)">
+        <div class="displayFlex">
+          <mat-icon>inbox</mat-icon> Sin fecha asignada
+          <span class="task-count"><b>({{countActivitiesWithNoStartDate()}})</b></span>
+        </div>
+        <div class="card" *ngFor="let activity of todoList" [draggable]="true" (dragstart)="drag($event, activity)" id="{{activity.activityId}}">
+          <div class="card-options">
+            <mat-menu #activityMenu="matMenu">
+              <button mat-menu-item (click)="editActivity(activity)">
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+              <button mat-menu-item (click)="deleteActivity(activity)">
+                <mat-icon>delete</mat-icon> Eliminar
+              </button>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="activityMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+          <div class="displayFlex">
+            <mat-icon class="icon" *ngIf="activity.type === 'FOOD'">restaurant_menu</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'PARTY'">celebration</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'ACTIVITY'">task_alt</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'LEARN'">school</mat-icon>
+            <p>{{activity.title}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna "Hoy" -->
+      <div class="column" id="todo" (drop)="onDrop($event, 'today')" (dragover)="allowDrop($event)">
+        <div class="displayFlex">
+          {{today | date}}
+          <span class="task-count"><b>({{countActivitiesForToday()}})</b></span>
+        </div>
+        <div class="card" *ngFor="let activity of todayList" [draggable]="true" (dragstart)="drag($event, activity)" id="{{activity.activityId}}">
+          <div class="card-options">
+            <mat-menu #activityMenu="matMenu">
+              <button mat-menu-item (click)="editActivity(activity)">
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+              <button mat-menu-item (click)="deleteActivity(activity)">
+                <mat-icon>delete</mat-icon> Eliminar
+              </button>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="activityMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+          <div class="displayFlex">
+            <mat-icon class="icon" *ngIf="activity.type === 'FOOD'">restaurant_menu</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'PARTY'">celebration</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'ACTIVITY'">task_alt</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'LEARN'">school</mat-icon>
+            <p>{{activity.title}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna "Mañana" -->
+      <div class="column" id="todo" (drop)="onDrop($event, 'tomorrow')" (dragover)="allowDrop($event)">
+        <div class="displayFlex">
+          {{tomorrow | date}}
+          <span class="task-count"><b>({{countActivitiesForTomorrow()}})</b></span>
+        </div>
+        <div class="card" *ngFor="let activity of tomorrowList" [draggable]="true" (dragstart)="drag($event, activity)" id="{{activity.activityId}}">
+          <div class="card-options">
+            <mat-menu #activityMenu="matMenu">
+              <button mat-menu-item (click)="editActivity(activity)">
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+              <button mat-menu-item (click)="deleteActivity(activity)">
+                <mat-icon>delete</mat-icon> Eliminar
+              </button>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="activityMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+          <div class="displayFlex">
+            <mat-icon class="icon" *ngIf="activity.type === 'FOOD'">restaurant_menu</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'PARTY'">celebration</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'ACTIVITY'">task_alt</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'LEARN'">school</mat-icon>
+            <p>{{activity.title}}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Columna "Pasado Mañana" -->
+      <div class="column" id="todo" (drop)="onDrop($event, 'dayAfterTomorrow')" (dragover)="allowDrop($event)">
+        <div class="displayFlex">
+          {{dayAfterTomorrow | date}}
+          <span class="task-count"><b>({{countActivitiesForDayAfterTomorrow()}})</b></span>
+        </div>
+        <div class="card" *ngFor="let activity of dayAfterTomorrowList" [draggable]="true" (dragstart)="drag($event, activity)" id="{{activity.activityId}}">
+          <div class="card-options">
+            <mat-menu #activityMenu="matMenu">
+              <button mat-menu-item (click)="editActivity(activity)">
+                <mat-icon>edit</mat-icon> Editar
+              </button>
+              <button mat-menu-item (click)="deleteActivity(activity)">
+                <mat-icon>delete</mat-icon> Eliminar
+              </button>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="activityMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+          <div class="displayFlex">
+            <mat-icon class="icon" *ngIf="activity.type === 'FOOD'">restaurant_menu</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'PARTY'">celebration</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'ACTIVITY'">task_alt</mat-icon>
+            <mat-icon class="icon" *ngIf="activity.type === 'LEARN'">school</mat-icon>
+            <p>{{activity.title}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>

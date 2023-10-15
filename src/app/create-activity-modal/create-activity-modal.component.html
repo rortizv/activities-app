@@ -19,7 +19,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Tipo de actividad</mat-label>
         <mat-select formControlName="type" required>
-          <mat-option *ngFor="let type of activityTypes" [value]="type">{{ type }}</mat-option>
+          <mat-option *ngFor="let type of activityTypes" [value]="type.value">{{ type.name }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -27,11 +27,11 @@
     <div class="row-dates">
       <div>
         <label for="startDate">Fecha inicio</label>
-        <input class="date-input" type="datetime-local" id="startDate" name="startDate" formControlName="startDate" required>
+        <input class="date-input" type="datetime-local" id="startDate" name="startDate" formControlName="startDate" [min]="minDate">
       </div>
       <div>
         <label for="endDate">Fecha finalización</label>
-        <input class="date-input" type="datetime-local" id="endDate" name="endDate" formControlName="endDate" required>
+        <input class="date-input" type="datetime-local" id="endDate" name="endDate" formControlName="endDate" [min]="minDate">
       </div>
     </div>
   </form>

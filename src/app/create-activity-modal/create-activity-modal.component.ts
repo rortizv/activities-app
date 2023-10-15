@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Activity } from '../interfaces/activity';
+import { Activity, ActivityType } from '../interfaces/activity';
 
 @Component({
   selector: 'app-create-activity-modal',
@@ -9,8 +9,14 @@ import { Activity } from '../interfaces/activity';
   styleUrls: ['./create-activity-modal.component.scss']
 })
 export class CreateActivityModalComponent implements OnInit {
-  activityTypes: string[] = ['ACTIVITY', 'PARTY', 'FOOD'];
+  activityTypes: ActivityType[] = [
+    { name: 'Actividad', value: 'ACTIVITY' },
+    { name: 'Comida', value: 'FOOD' },
+    { name: 'Fiesta', value: 'PARTY' },
+    { name: 'Aprendizaje', value: 'LEARN' }
+  ];
   activityForm: FormGroup;
+  minDate: string = '';
 
   constructor(
     private dialogRef: MatDialogRef<CreateActivityModalComponent>,
@@ -21,6 +27,9 @@ export class CreateActivityModalComponent implements OnInit {
       startDate: [null],
       endDate: [null],
     });
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);
+    this.minDate = today.toISOString().slice(0, 16);
   }
 
   ngOnInit() {}
