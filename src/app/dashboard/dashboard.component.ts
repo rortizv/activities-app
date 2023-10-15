@@ -1,19 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Activity, ActivityStatus, ActivityType } from '../interfaces/activity';
 import { MatDialog } from '@angular/material/dialog';
-import { MatMenuTrigger } from '@angular/material/menu';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-  CdkDrag,
-  CdkDropList,
-} from '@angular/cdk/drag-drop';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CreateActivityModalComponent } from '../create-activity-modal/create-activity-modal.component';
-import { v4 as uuidv4 } from 'uuid';
 import { ConfirmationDialogService } from '../services/confirmation-dialog.service';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { v4 as uuidv4 } from 'uuid';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -96,8 +89,9 @@ export class DashboardComponent implements OnInit {
   ];
 
   constructor(private dialog: MatDialog,
-    private confirmationDialogService: ConfirmationDialogService,
-    private _snackBar: MatSnackBar) { }
+              private confirmationDialogService: ConfirmationDialogService,
+              public configService: ConfigService,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getTodoList();
@@ -108,7 +102,11 @@ export class DashboardComponent implements OnInit {
   }
 
   openCreateActivityDialog(): void {
-    const dialogRef = this.dialog.open(CreateActivityModalComponent, { width: '600px' });
+    this.configService.isEditing = false;
+    const dialogRef = this.dialog.open(CreateActivityModalComponent, {
+      width: '600px'
+    });
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
@@ -232,7 +230,6 @@ export class DashboardComponent implements OnInit {
     const activity = this.activities.find((a) => a.activityId === activityId);
 
     if (activity) {
-      // Update the activity's start date based on the column it's dropped into
       if (column === 'today') {
         activity.startDate = new Date().toISOString();
         activity.endDate = new Date().toISOString();
@@ -258,26 +255,27 @@ export class DashboardComponent implements OnInit {
 
   updateLists() {
     this.getTodoList();
-    console.log(this.todoList);
     this.getTodayList();
-    console.log(this.todayList);
     this.getTomorrowList();
-    console.log(this.tomorrowList);
     this.getDayAfterTomorrowList();
-    console.log(this.dayAfterTomorrowList);
   }
 
   editActivity(activity: Activity): void {
+    this.configService.isEditing = true;
+    this.configService.activity = activity;
     const dialogRef = this.dialog.open(CreateActivityModalComponent, {
-      width: '600px',
-      data: { activity },
+      width: '600px'
     });
+
     dialogRef.afterClosed().subscribe((result) => {
+      this.configService.activity = {} as Activity;
       if (result) {
+        this.activities.push(result);
+        this.updateLists();
         this._snackBar.open('Actividad editada satisfactoriamente', 'Cerrar', {
           duration: 4000,
         });
-        console.log('Activity edited:', result);
+        this.configService.isEditing = false;
       }
     });
   }
@@ -288,6 +286,7 @@ export class DashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.configService.activity = {} as Activity;
       if (result) {
         this.deleteActivityFromList(activity);
       }
