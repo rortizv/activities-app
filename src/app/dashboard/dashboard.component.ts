@@ -286,8 +286,12 @@ export class DashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.configService.activity = {} as Activity;
+      const index = this.activities.findIndex((a) => a.activityId === activity.activityId);
+      if (index >= 0) {
+        result.activityId = activity.activityId;
+        this.activities[index] = result;
+      }
       if (result) {
-        this.activities.push(result);
         this.updateLists();
         this._snackBar.open('Actividad editada satisfactoriamente', 'Cerrar', {
           duration: 4000,

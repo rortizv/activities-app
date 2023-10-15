@@ -15,7 +15,7 @@
     <div class="displayFlex space-between secondary-container">
       <!-- Columna "Sin fecha asignada" -->
       <div class="column" id="todo" (drop)="onDrop($event, 'todo')" (dragover)="allowDrop($event)">
-        <div class="displayFlex">
+        <div class="displayFlex column-title">
           <mat-icon>inbox</mat-icon> Sin fecha asignada
           <span class="task-count"><b>({{countActivitiesWithNoStartDate()}})</b></span>
         </div>
@@ -45,7 +45,7 @@
 
       <!-- Columna "Hoy" -->
       <div class="column" id="todo" (drop)="onDrop($event, 'today')" (dragover)="allowDrop($event)">
-        <div class="displayFlex">
+        <div class="displayFlex column-title">
           {{today | date}}
           <span class="task-count"><b>({{countActivitiesForToday()}})</b></span>
         </div>
@@ -75,7 +75,7 @@
 
       <!-- Columna "Mañana" -->
       <div class="column" id="todo" (drop)="onDrop($event, 'tomorrow')" (dragover)="allowDrop($event)">
-        <div class="displayFlex">
+        <div class="displayFlex column-title">
           {{tomorrow | date}}
           <span class="task-count"><b>({{countActivitiesForTomorrow()}})</b></span>
         </div>
@@ -105,7 +105,7 @@
 
       <!-- Columna "Pasado Mañana" -->
       <div class="column" id="todo" (drop)="onDrop($event, 'dayAfterTomorrow')" (dragover)="allowDrop($event)">
-        <div class="displayFlex">
+        <div class="displayFlex column-title">
           {{dayAfterTomorrow | date}}
           <span class="task-count"><b>({{countActivitiesForDayAfterTomorrow()}})</b></span>
         </div>
