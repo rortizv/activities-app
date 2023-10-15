@@ -89,9 +89,9 @@ export class DashboardComponent implements OnInit {
   ];
 
   constructor(private dialog: MatDialog,
-              private confirmationDialogService: ConfirmationDialogService,
-              public configService: ConfigService,
-              private _snackBar: MatSnackBar) { }
+    private confirmationDialogService: ConfirmationDialogService,
+    public configService: ConfigService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.getTodoList();
@@ -233,18 +233,35 @@ export class DashboardComponent implements OnInit {
       if (column === 'today') {
         activity.startDate = new Date().toISOString();
         activity.endDate = new Date().toISOString();
+        let index = this.activities.findIndex((a) => a.activityId === activity.activityId);
+        if (index >= 0) {
+          this.activities[index].startDate = new Date().toISOString();
+          this.activities[index].endDate = new Date().toISOString();
+        }
       } else if (column === 'tomorrow') {
-        const tomorrow = new Date();
+        let tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
+        let aux = tomorrow;
         tomorrow.setHours(0, 0, 0, 0);
         activity.startDate = tomorrow.toISOString();
         activity.endDate = tomorrow.toISOString();
+        const index = this.activities.findIndex((a) => a.activityId === activity.activityId);
+        if (index >= 0) {
+          this.activities[index].startDate = aux.toISOString();
+          this.activities[index].endDate = aux.toISOString();
+        }
       } else if (column === 'dayAfterTomorrow') {
-        const dayAfterTomorrow = new Date();
+        let dayAfterTomorrow = new Date();
         dayAfterTomorrow.setDate(dayAfterTomorrow.getDate() + 2);
+        let aux = dayAfterTomorrow;
         dayAfterTomorrow.setHours(0, 0, 0, 0);
         activity.startDate = dayAfterTomorrow.toISOString();
         activity.endDate = dayAfterTomorrow.toISOString();
+        const index = this.activities.findIndex((a) => a.activityId === activity.activityId);
+        if (index >= 0) {
+          this.activities[index].startDate = aux.toISOString();
+          this.activities[index].endDate = aux.toISOString();
+        }
       }
       this._snackBar.open('Actividad movida satisfactoriamente', 'Cerrar', {
         duration: 2500,
